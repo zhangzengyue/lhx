@@ -303,3 +303,48 @@ function create_poster($qrcode_path = '', $poster_bg_path = '', $qrcode_size = 2
         return false;
     }
 }
+
+/**
+ * 获取随机金额
+ * @param   float   $money  发放总金额
+ * @param   number  $num    份数
+ * @param   float   $poise  波动平衡 取值范围 0.01 - 99.99，值越大结果越平衡
+ */
+function get_random_money($money = 100, $num = 10, $poise = 50)
+{
+    
+    $result = [];
+    
+    $index = 0;
+
+    for ($i = 0; $i < $money * 100; $i++) {
+        
+        isset($result[$index]) ? $result[$index]++ : $result[$index] = 1;
+        
+        $index < $num - 1 ? $index++ : $index = 0;
+    }
+    
+    for ($i = 0; $i < $num * 10; $i++) {
+        
+        $r1         = rand(0, $num - 1);
+        $r2         = rand(0, $num - 1);
+        $fluctuate  = rand($poise, 100) / 100;
+        
+        // 随机金额
+        $mon =  $result[$r1] - floor($result[$r1] * $fluctuate);
+        
+        if ($result[$r1] - $mon > 0) {
+            // 减去随机金额
+            $result[$r1] = $result[$r1] - $mon;
+            // 添加随机金额
+            $result[$r2] = $result[$r2] + $mon;
+        }
+    }
+
+    foreach ($result as &$v) {
+        
+        $v /= 100;
+    }
+    
+    return $result;
+}
