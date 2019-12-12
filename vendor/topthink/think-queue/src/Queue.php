@@ -69,6 +69,7 @@ class Queue
     private static function handle()
     {
         $options = Config::get('queue');
+        
         $type    = !empty($options['type']) ? $options['type'] : 'Sync';
 
         if (!isset(self::$instance[$type])) {

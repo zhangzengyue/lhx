@@ -97,7 +97,7 @@ class Database
             'payload'      => $payload,
             'attempts'     => $attempts,
             'reserved'     => 0,
-            'reserved_at'  => null,
+            'reserved_at'  => 0,
             'available_at' => time() + $delay,
             'created_at'   => time()
         ]);
