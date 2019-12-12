@@ -4052,3 +4052,19 @@ CREATE TABLE `ob_picture` (
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=194 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='图片表';
+
+-- ----------------------------
+-- Table structure for `ob_jobs`
+-- ----------------------------
+DROP TABLE IF EXISTS `ob_jobs`;
+CREATE TABLE `ob_jobs` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '队列名称',
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '有效负载',
+  `attempts` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '重试次数',
+  `reserved` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '订阅次数',
+  `reserved_at` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '订阅时间',
+  `available_at` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '有效时间',
+  `created_at` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='消息队列';
