@@ -196,7 +196,8 @@ class Windows extends Pipes
             return;
         }
 
-        if (null !== $w && 0 < count($r)) {
+//        if (null !== $w && 0 < count($r)) {
+        if (null !== $w && 0 < is_array($r) ? count($r) : 0) {
             $data = '';
             while ($dataread = fread($r['input'], self::CHUNK_SIZE)) {
                 $data .= $dataread;
@@ -209,7 +210,8 @@ class Windows extends Pipes
             }
         }
 
-        if (null !== $w && 0 < count($w)) {
+//        if (null !== $w && 0 < count($w)) {
+        if (null !== $w && 0 < is_array($w) ? count($w) : 0) {
             while (strlen($this->inputBuffer)) {
                 $written = fwrite($w[0], $this->inputBuffer, 2 << 18);
                 if ($written > 0) {
