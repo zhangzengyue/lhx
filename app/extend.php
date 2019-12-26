@@ -51,7 +51,7 @@ function export_excel($titles = '', $keys = '', $data = [], $file_name = '导出
         }
     }
 
-    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
     
     $objWriter->save('php://output'); exit;
 }
