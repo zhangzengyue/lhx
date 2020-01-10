@@ -190,8 +190,27 @@ class Alipay extends Pay implements Driver
     
     /**
      * 支付通知处理
+     * 支付宝已取消MD5验签，目前修改为RSA2验签
      */
-    public function notify()
+    public function notify(){
+        $alipay_config = $this->config();
+        $arr=$_REQUEST;
+        if (isset($arr['s']))
+            unset($arr['s']);
+        require_once('alipay/AopClient.php');
+        $aop = new \AopClient ();
+        $aop->appId = $alipay_config['alipay_appid'];
+        $aop->rsaPrivateKey = $alipay_config['alipay_rsa_private_key'];
+        $aop->alipayrsaPublicKey= $alipay_config['alipay_rsa_public_key'];
+        $aop->apiVersion = '1.0';
+        $aop->postCharset='UTF-8';
+        $aop->format='json';
+        $aop->signType='RSA2';
+        if($arr["app_id"]!=$aop->appId)
+            return false;
+        return $aop->rsaCheckV1($arr, null,'RSA2');
+    }
+    /*public function notify()
     {
         
         $alipay_config = $this->config();
@@ -212,5 +231,5 @@ class Alipay extends Pay implements Driver
         }
         
         return false;
-    }
+    }*/
 }
