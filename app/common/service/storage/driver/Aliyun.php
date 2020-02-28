@@ -116,7 +116,9 @@ class Aliyun extends Storage implements Driver
         }
 
         $this->fileDel($info['path']);
-
+        if(!empty($config['domain'])){
+            return $config['domain']. DS .$save_path;
+        }
         return $result['info']['url'];
     }
 
