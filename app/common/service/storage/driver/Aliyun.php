@@ -38,7 +38,7 @@ class Aliyun extends Storage implements Driver
     public function getDriverParam()
     {
         
-        return ['ak_id' => '阿里云accessKeyId', 'ak_secret' => '阿里云accessKeySecret', 'bucket_name' => '阿里云bucket', 'endpoint' => '阿里云endpoint'];
+        return ['ak_id' => '阿里云accessKeyId', 'ak_secret' => '阿里云accessKeySecret', 'bucket_name' => '阿里云bucket', 'endpoint' => '阿里云endpoint', 'domain' => '指定绑定域名（不强制）'];
     }
     
     /**
@@ -84,7 +84,9 @@ class Aliyun extends Storage implements Driver
         $oss->uploadFile($config['bucket_name'], $thumb_save_path . 'big_'      . $path_arr[1], $thumb_file_path . 'big_'       . $path_arr[1]);
 
         $this->pictureDel($info['path']);
-
+        if(!empty($config['domain'])){
+            return $config['domain']. DS .$save_path;
+        }
         return $result['info']['url'];
     }
     

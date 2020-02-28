@@ -6,7 +6,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>{$v}</label>
-                    <input class="form-control" name="param[{$k}]" value="{$info['config'][$k]}" placeholder="请输入{$v}" type="text">
+                    <input class="form-control" name="param[{$k}]" value="{$info['config'][$k]|default=''}" placeholder="请输入{$v}" type="text">
                   </div>
                 </div>
             {/foreach}
