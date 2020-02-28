@@ -175,7 +175,9 @@ class File extends LogicBase
         $info = $this->modelFile->getInfo(['id' => $id], 'path,url');
         
         if (!empty($info['url'])) {
-
+            if(preg_match("/^http(s)?:\\/\\/.+/",$info['url'])){
+                return $info['url'];
+            }
             return config('static_domain') . SYS_DS_PROS . $info['url'];
         }
 
