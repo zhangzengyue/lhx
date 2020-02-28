@@ -37,7 +37,11 @@
         
         $("#{$widget_data['name']}").val(data.id);
 
-        var src = !data['url'] ? "__ROOT__/upload/file/" + data.path : '/' + data.url;
+        if(data.url.substr(0,7).toLowerCase() == "http://" || data.url.substr(0,8).toLowerCase() == "https://"){
+            var src = data.url
+        }else{
+            var src = !data['url'] ? "__ROOT__/upload/file/" + data.path : '/' + data.url;
+        }
         
         $(".upload-img-box{$widget_data['name']}").html('<div class="upload-pre-file">    <div style="cursor:pointer;" class="file_del"  onclick="fileDel{$widget_data.name}(this)" ><img src="/static/widget/admin/file/uploadify-cancel.png" /></div>      <span class="upload_icon_all"></span><a target="_blank" href="'+src+'"> ' + src + ' <a></div>');
     }
