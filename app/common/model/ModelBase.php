@@ -228,20 +228,16 @@ class ModelBase extends Model
     final protected function getListQuery($obj = null, $where = [])
     {
         
-        empty($obj->join) && !isset($where[DATA_STATUS_NAME]) && $where[DATA_STATUS_NAME] = ['neq', DATA_DELETE];
+        !empty($obj->connection) || (empty($obj->join) && !isset($where[DATA_STATUS_NAME]) && $where[DATA_STATUS_NAME] = ['neq', DATA_DELETE]);
 
         if (empty($obj->join)) {
-            
-            !isset($where[DATA_STATUS_NAME]) && $where[DATA_STATUS_NAME] = ['neq', DATA_DELETE];
             
             $query = $obj;
             
         } else {
-            
+
             $query = $obj->join($obj->join);
         }
-        
-        return [$query, $where];
     }
     
     /**
