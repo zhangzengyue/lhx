@@ -50,9 +50,9 @@ class ModelBase extends Model
             
             if (empty($where)) {
                 
-                empty($data[TIME_CT_NAME]) && $data[TIME_CT_NAME] = time();
+                $select_model?:empty($data[TIME_CT_NAME]) && $data[TIME_CT_NAME] = time();
                 
-                return $select_model ? Db::name($this->name)->insertGetId($data) : $this->data($data)->save();
+                return $select_model ? $this->data($data)->save() : Db::name($this->name)->insertGetId($data);
             }
                 
             return $this->updateInfo($where, $data);
