@@ -39,7 +39,7 @@ class ModelBase extends Model
     /**
      * 设置数据
      */
-    final protected function setInfo($data = [], $where = [])
+    final protected function setInfo($data = [], $where = [], $select_model = false)
     {
         
         $this->updateCache($this);
@@ -52,7 +52,7 @@ class ModelBase extends Model
                 
                 empty($data[TIME_CT_NAME]) && $data[TIME_CT_NAME] = time();
                 
-                return Db::name($this->name)->insertGetId($data);
+                return $select_model ? Db::name($this->name)->insertGetId($data) : $this->data($data)->save();
             }
                 
             return $this->updateInfo($where, $data);
