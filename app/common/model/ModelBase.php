@@ -238,6 +238,8 @@ class ModelBase extends Model
 
             $query = $obj->join($obj->join);
         }
+
+        return [$query, $where];
     }
     
     /**
