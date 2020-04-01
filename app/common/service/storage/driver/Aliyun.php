@@ -85,7 +85,7 @@ class Aliyun extends Storage implements Driver
 
         $this->pictureDel($info['path']);
         if(!empty($config['domain'])){
-            return $config['domain']. DS .$save_path;
+            return $config['domain']. '/' .$save_path;
         }
         return $result['info']['url'];
     }
