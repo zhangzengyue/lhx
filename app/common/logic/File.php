@@ -145,21 +145,31 @@ class File extends LogicBase
         $info = $this->modelPicture->getInfo(['id' => $id], 'path,url');
         
         if (!empty($info['url'])) {
-        	if(preg_match("/^http(s)?:\\/\\/.+/",$info['url'])){
-				return $info['url'];
-			}
+            if(preg_match("/^http(s)?:\\/\\/.+/",$info['url'])){
+                return $info['url'];
+            }
             return config('static_domain') . SYS_DS_PROS . $info['url'];
         }
 
         $root_url = get_file_root_path();
-
         if (!empty($info['path'])) {
-
-            return $root_url . 'upload/picture/'.$info['path'];
+            $storage_driver = config('storage_driver');
+            if (!empty($storage_driver)) {
+                $driver = SYS_DRIVER_DIR_NAME . $storage_driver;
+                $storage_result = $this->serviceStorage->$driver->config();
+                if(isset($storage_result['domain'])){
+                    return $storage_result['domain'] . '/upload/picture/'.$info['path'];
+                }
+            }
+            if(config('static_domain')){
+                return config('static_domain'). '/upload/picture/'.$info['path'];
+            }else{
+                return $root_url . 'upload/picture/'.$info['path'];
+            }
         }
 
         if ($is_head) {
-            
+
             return $root_url . 'static/module/admin/img/default_head.jpg';
         }
 
@@ -184,8 +194,21 @@ class File extends LogicBase
         if (!empty($info['path'])) {
 
             $root_url = get_file_root_path();
+            $storage_driver = config('storage_driver');
+            if (!empty($storage_driver)) {
+                $driver = SYS_DRIVER_DIR_NAME . $storage_driver;
+                $storage_result = $this->serviceStorage->$driver->config();
+                if(isset($storage_result['domain'])){
+                    return $storage_result['domain'] . '/upload/file/'.$info['path'];
+                }
+            }
+            if(config('static_domain')){
+                return config('static_domain'). '/upload/file/'.$info['path'];
+            }else{
+                return $root_url . 'upload/file/'.$info['path'];
+            }
 
-            return $root_url . 'upload/file/'.$info['path'];
+
         }
 
         return '暂无文件';
