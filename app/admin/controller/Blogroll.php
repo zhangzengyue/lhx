@@ -62,4 +62,12 @@ class Blogroll extends AdminBase
         
         $this->jump($this->logicBlogroll->blogrollDel(['id' => $id]));
     }
+    /**
+     * 
+     */
+    public function blogrollDel($id = 0)
+    {
+        
+        $this->jump($this->logicBlogroll->blogrollDel(['id' => $id]));
+    }
 }

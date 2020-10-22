@@ -14,7 +14,7 @@ namespace app\admin\model;
 /**
  * 权限组模型
  */
-class AuthGroup extends AdminBase
+class PowerGroup extends AdminBase
 {
     
 }
